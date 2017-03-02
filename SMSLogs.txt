@@ -1,0 +1,16 @@
+11/28/16 16:45:39 Window created.
+11/28/16 16:45:39 Gateway COM3modem created.
+11/28/16 16:45:39 gatewaycount: 1
+11/28/16 16:45:39 Gateway COM4modem created.
+11/28/16 16:45:39 gatewaycount: 2
+11/28/16 16:45:39 Service created.
+11/28/16 16:45:39 Gateway added.
+11/28/16 16:45:39 Gateway added.
+11/28/16 16:46:20 Window created.
+11/28/16 16:46:21 Gateway COM3modem created.
+11/28/16 16:46:21 gatewaycount: 1
+11/28/16 16:46:21 Gateway COM4modem created.
+11/28/16 16:46:21 gatewaycount: 2
+11/28/16 16:46:21 Service created.
+11/28/16 16:46:21 Gateway added.
+11/28/16 16:46:21 Gateway added.
