@@ -1,2 +1,4 @@
 /bin/
 /*.log
+/SMSLogs.txt
+/test.csv
