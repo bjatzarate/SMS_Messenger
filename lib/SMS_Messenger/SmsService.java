@@ -34,8 +34,10 @@ public class SmsService
 		Enumeration<CommPortIdentifier> pp = CommPortIdentifier.getPortIdentifiers();
 		if ( pp.hasMoreElements() )
 		{
-			while (pp.hasMoreElements())
-			{
+			//Multiple ports causes crash
+			//will now find first port then create gateway
+			//while (pp.hasMoreElements())
+			//{
 				CommPortIdentifier ne = pp.nextElement();
 				if(ne.getPortType() == CommPortIdentifier.PORT_SERIAL && ne.getName().matches("COM\\d+") && !ne.getName().matches("COM1"))
 				{
@@ -49,7 +51,7 @@ public class SmsService
 					System.out.println("gatewaycount: " + gatewaycount);
 					SmsLogger.log("gatewaycount: " + gatewaycount);
 				}	
-			}
+			//}
 			
 			outboundNotification = new OutboundNotification();
 			inboundNotification = new InboundNotification();
@@ -76,7 +78,7 @@ public class SmsService
 			
 			try
 			{
-				service.startService();
+				service.startService(true);
 			}
 			catch (Exception e)
 			{

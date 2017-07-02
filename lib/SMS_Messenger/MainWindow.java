@@ -7,7 +7,6 @@ package SMS_Messenger;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -26,7 +25,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -47,12 +45,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.UIDefaults;
-import javax.swing.UIManager;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.plaf.FontUIResource;
 
 import org.smslib.modem.SerialModemGateway;
 
@@ -160,7 +155,6 @@ public class MainWindow implements ActionListener, TableModelListener
 		}
 		catch (IOException e2)
 		{
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		
@@ -484,7 +478,7 @@ public class MainWindow implements ActionListener, TableModelListener
 		bulk.setEnabled(false);
 		
 		smsservice = new SmsService();
-		
+
 		if ( smsservice.gatewaycount > 0 )
 		{
 			SerialModemGateway smg;
@@ -967,41 +961,10 @@ public class MainWindow implements ActionListener, TableModelListener
 		}
 	}
 	
-	public static void initializeFontSize()
-	{
-		float multiplier = 1.25f;
-		UIDefaults defaults = UIManager.getDefaults();
-		Enumeration<Object> e = defaults.keys();
-		while (e.hasMoreElements())
-		{
-			Object key = e.nextElement();
-			Object value = defaults.get(key);
-			if ( value instanceof Font )
-			{
-				Font font = (Font) value;
-				int newSize = Math.round(font.getSize() * multiplier);
-				if ( value instanceof FontUIResource )
-				{
-					defaults.put(key, new FontUIResource(font.getName(), font.getStyle(), newSize));
-				}
-				else
-				{
-					defaults.put(key, new Font(font.getName(), font.getStyle(), newSize));
-				}
-			}
-		}
-	}
-	
 	@Override
 	public void tableChanged(TableModelEvent arg0)
 	{
 		// TODO Auto-generated method stub
 		
-	}
-	
-	public static void main(String[] args)
-	{
-		initializeFontSize();
-		new MainWindow();
 	}
 }
