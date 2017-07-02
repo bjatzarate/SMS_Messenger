@@ -7,6 +7,9 @@ package SMS_Messenger;
 
 import gnu.io.CommPortIdentifier;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -23,35 +26,65 @@ public class SmsService
 	Service service;
 	OutboundNotification outboundNotification;
 	InboundNotification inboundNotification;
-	List<SerialModemGateway> gates;
+	String[] gatedetails = {"", "", "", ""};
 	int gatewaycount = 0;
 	
 	public SmsService()
 	{
-		gates = new ArrayList<SerialModemGateway>();
-		
 		@SuppressWarnings("unchecked")
 		Enumeration<CommPortIdentifier> pp = CommPortIdentifier.getPortIdentifiers();
 		if ( pp.hasMoreElements() )
 		{
-			//Multiple ports causes crash
-			//will now find first port then create gateway
-			//while (pp.hasMoreElements())
-			//{
-				CommPortIdentifier ne = pp.nextElement();
-				if(ne.getPortType() == CommPortIdentifier.PORT_SERIAL && ne.getName().matches("COM\\d+") && !ne.getName().matches("COM1"))
+			String line = "";
+			String[] banana;
+			BufferedReader br;
+			
+			try
+			{
+				br = new BufferedReader(new FileReader("Modem.ini"));
+				while ((line = br.readLine()) != null)
 				{
-					gateway = new SerialModemGateway(ne.getName() + "modem", ne.getName(), 115200, "", "");
-					gateway.setInbound(true);
-					gateway.setOutbound(true);
-					gates.add(gateway);
-					gatewaycount++;
-					System.out.println("Gateway " + ne.getName() + "modem created.");
-					SmsLogger.log("Gateway " + ne.getName() + "modem created.");
-					System.out.println("gatewaycount: " + gatewaycount);
-					SmsLogger.log("gatewaycount: " + gatewaycount);
-				}	
-			//}
+					banana = line.split(": ", 2);
+					switch(banana[0])
+					{
+						case "Modem_Port":
+						{
+							gatedetails[0] = banana[1];
+							break;
+						}
+						case "Baud_Rate":
+						{
+							gatedetails[1] = banana[1];
+							break;
+						}
+						case "Manufacturer":
+						{
+							gatedetails[2] = banana[1];
+							break;
+						}
+						case "Model":
+						{
+							gatedetails[3] = banana[1];
+							break;
+						}
+					}
+				}
+				br.close();
+			}
+			catch (IOException e1)
+			{
+				e1.printStackTrace();
+			}
+			
+			gateway = new SerialModemGateway(gatedetails[0] + "modem", gatedetails[0], Integer.parseInt(gatedetails[1]), gatedetails[2], gatedetails[3]);
+			gatewaycount++;
+			gateway.setInbound(true);
+			gateway.setOutbound(true);
+			System.out.println("Gateway " + gatedetails[0] + "modem created.");
+			SmsLogger.log("Gateway " + gatedetails[0] + "modem created.");
+			System.out.println("gatewaycount: " + gatewaycount);
+			SmsLogger.log("gatewaycount: " + gatewaycount);
+			
 			
 			outboundNotification = new OutboundNotification();
 			inboundNotification = new InboundNotification();
@@ -62,19 +95,16 @@ public class SmsService
 			System.out.println("Service created.");
 			SmsLogger.log("Service created.");
 			
-			for (int i = 0; i < gatewaycount; i++)
+			try
 			{
-				try
-				{
-					service.addGateway(gates.get(i));
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-				System.out.println("Gateway added.");
-				SmsLogger.log("Gateway added.");
+				service.addGateway(gateway);
 			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			System.out.println("Gateway added.");
+			SmsLogger.log("Gateway added.");
 			
 			try
 			{

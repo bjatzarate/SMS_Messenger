@@ -49,8 +49,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.smslib.modem.SerialModemGateway;
-
 public class MainWindow implements ActionListener, TableModelListener
 {
 	public static Responder responder;
@@ -99,8 +97,6 @@ public class MainWindow implements ActionListener, TableModelListener
 	JButton deleteSent;
 	public static JLabel senttotal;
 	
-	JTable modemTable;
-	public static BoxTableModel modemBTM;
 	static SmsService smsservice;
 	
 	Image phone;
@@ -110,7 +106,6 @@ public class MainWindow implements ActionListener, TableModelListener
 	Icon minbox;
 	Icon moutbox;
 	Icon msent;
-	Icon modemIcon;
 	Icon mail;
 	Icon bulkmail;
 	Icon save;
@@ -147,7 +142,6 @@ public class MainWindow implements ActionListener, TableModelListener
 			minbox = new ImageIcon(ImageIO.read(getClass().getResource("/resources/inbox.png")));
 			moutbox = new ImageIcon(ImageIO.read(getClass().getResource("/resources/outbox.png")));
 			msent = new ImageIcon(ImageIO.read(getClass().getResource("/resources/sent.png")));
-			modemIcon = new ImageIcon(ImageIO.read(getClass().getResource("/resources/modem.png")));
 			mail = new ImageIcon(ImageIO.read(getClass().getResource("/resources/mail.png")));
 			bulkmail = new ImageIcon(ImageIO.read(getClass().getResource("/resources/bulkmail.png")));
 			save = new ImageIcon(ImageIO.read(getClass().getResource("/resources/save.png")));
@@ -449,21 +443,6 @@ public class MainWindow implements ActionListener, TableModelListener
 		
 		tabs.addTab("Sent Items", msent, sent, "View sent messages");
 		
-		// create the modems tab
-		JPanel modem = new JPanel(new BorderLayout());
-		JPanel mText = new JPanel(new BorderLayout());
-		modemBTM = new BoxTableModel(modemnames, emptylist);
-		modemTable = new JTable(modemBTM);
-		
-		JScrollPane modemscroll = new JScrollPane(modemTable);
-		modemscroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		modemscroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		modemTable.setFillsViewportHeight(true);
-		mText.add(modemscroll, BorderLayout.CENTER);
-		modem.add(mText, BorderLayout.CENTER);
-		
-		tabs.addTab("Modems", modemIcon, modem, "View connected modems");
-		
 		// add all tabs to frame
 		frame.add(tabs, BorderLayout.CENTER);
 		// Display the window.
@@ -481,28 +460,9 @@ public class MainWindow implements ActionListener, TableModelListener
 
 		if ( smsservice.gatewaycount > 0 )
 		{
-			SerialModemGateway smg;
-			for (int i = 0; i < smsservice.gates.size(); i++)
-			{
-				smg = smsservice.gates.get(i);
-				try
-				{
-					Object[] gateway =
-					{
-							smg.getGatewayId(), smg.getGatewayId().substring(0, smg.getGatewayId().length() - 5)
-					};
-					modemBTM.addRow(gateway);
-					System.out.println("Gateway ID: " + smg.getGatewayId() + " added to modemBTM");
-					SmsLogger.log("Gateway ID: " + smg.getGatewayId() + " added to modemBTM");
-					stopService.setEnabled(true);
-					send.setEnabled(true);
-					bulk.setEnabled(true);
-				}
-				catch (Exception e1)
-				{
-					e1.printStackTrace();
-				}
-			}
+			stopService.setEnabled(true);
+			send.setEnabled(true);
+			bulk.setEnabled(true);
 			
 			// auto-response functionality
 			responder = new Responder("response.csv", "registered.csv");

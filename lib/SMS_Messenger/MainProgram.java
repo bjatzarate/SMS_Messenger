@@ -1,3 +1,8 @@
+/**
+ * @author Billy Joel Arlo T. Zarate
+ * 
+ * This program serves as the main file of the program
+ */
 package SMS_Messenger;
 
 import java.awt.Font;
