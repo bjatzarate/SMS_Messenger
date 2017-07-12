@@ -39,7 +39,7 @@ public class OutboundNotification implements IOutboundMessageNotification
 			}
 			Object[] newrow =
 			{
-					name, outboundMessage.getRecipient().trim(), outboundMessage.getText().trim(), outboundMessage.getDate()
+					name, outboundMessage.getRecipient().trim(), outboundMessage.getText().trim(), outboundMessage.getDispatchDate()
 			};
 			MainWindow.sentBTM.addRow(newrow);
 			MainWindow.senttotal.setText("Total messages: " + MainWindow.sentBTM.getRowCount());

@@ -210,9 +210,11 @@ public class MainWindow implements ActionListener, TableModelListener
 		contactsTable = new JTable(contactsBTM);
 		contactsTable.getModel().addTableModelListener(this);
 		JLabel label1 = new JLabel("Reciever");
-		entry1 = new JTextField(35);
+		entry1 = new JTextField(20);
 		JLabel label2 = new JLabel("Message");
-		entry2 = new JTextArea(3, 35);
+		entry2 = new JTextArea(3, 20);
+		entry2.setLineWrap(true);
+		entry2.setWrapStyleWord(true);
 		send = new JButton("Send", mail);
 		send.addActionListener(this);
 		bulk = new JButton("Bulk", bulkmail);
