@@ -166,7 +166,7 @@ public class MainWindow implements ActionListener, TableModelListener
 		// create the menubar
 		menuBar = new JMenuBar();
 		
-		options = new JMenu("Options");
+		options = new JMenu("Option");
 		options.setMnemonic(KeyEvent.VK_O);
 		options.getAccessibleContext().setAccessibleDescription("Menu for other functionalities.");
 		menuBar.add(options);
@@ -209,7 +209,7 @@ public class MainWindow implements ActionListener, TableModelListener
 		contactsBTM = new BoxTableModel(contact, emptylist);
 		contactsTable = new JTable(contactsBTM);
 		contactsTable.getModel().addTableModelListener(this);
-		JLabel label1 = new JLabel("Reciever");
+		JLabel label1 = new JLabel("Receiver");
 		entry1 = new JTextField(20);
 		JLabel label2 = new JLabel("Message");
 		entry2 = new JTextArea(3, 20);
@@ -516,11 +516,11 @@ public class MainWindow implements ActionListener, TableModelListener
 			
 			if ( receiver.isEmpty() )
 			{
-				JOptionPane.showMessageDialog(frame, "Reciever field is empty.", "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "Receiver field is empty.", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 			else if ( !receiver.matches("0*\\d{10}") )
 			{
-				JOptionPane.showMessageDialog(frame, "Reciever field entry not recognized.", "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "Receiver field entry not recognized.", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 			else
 			{
@@ -686,6 +686,7 @@ public class MainWindow implements ActionListener, TableModelListener
 			if ( n == JOptionPane.YES_OPTION )
 			{
 				inboxBTM.deleteAll();
+				inboxtotal.setText("Total messages: " + inboxBTM.getRowCount());
 				SmsLogger.log("Inbox deleted.");
 			}
 		}
@@ -735,6 +736,7 @@ public class MainWindow implements ActionListener, TableModelListener
 			if ( n == JOptionPane.YES_OPTION )
 			{
 				outboxBTM.deleteAll();
+				outboxtotal.setText("Total messages: " + outboxBTM.getRowCount());
 				SmsLogger.log("Outbox deleted.");
 			}
 		}
@@ -784,6 +786,7 @@ public class MainWindow implements ActionListener, TableModelListener
 			if ( n == JOptionPane.YES_OPTION )
 			{
 				sentBTM.deleteAll();
+				senttotal.setText("Total messages: " + sentBTM.getRowCount());
 				SmsLogger.log("Sent items deleted.");
 			}
 		}
