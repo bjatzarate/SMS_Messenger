@@ -53,6 +53,8 @@ public class MainWindow implements ActionListener, TableModelListener
 {
 	public static Responder responder;
 	
+	String version = "2.0";
+	
 	JFrame frame;
 	JTabbedPane tabs;
 	
@@ -892,7 +894,7 @@ public class MainWindow implements ActionListener, TableModelListener
 		}
 		else if ( e.getSource().equals(about) )
 		{
-			JOptionPane.showMessageDialog(frame, "SMS Messenger V1.0 by Billy Joel Arlo T. Zarate", "About", JOptionPane.PLAIN_MESSAGE);
+			JOptionPane.showMessageDialog(frame, "SMS Messenger "+ version +" by Billy Joel Arlo T. Zarate", "About", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 	
